@@ -14,8 +14,13 @@ public class Publisher {
 		Connection connection = factory.newConnection();
 		Channel channel = connection.createChannel();
 		
-		String message = "My first message  from RabbitMQ";
- 		channel.basicPublish("", "Queue-1", null, message.getBytes());
+//		String message = "My first message  from RabbitMQ";
+		
+		String[] messages = {"First", "Second", "Third", "Fourth"};
+		
+		for(String message : messages) {
+			channel.basicPublish("", "Queue-1", null, message.getBytes());
+		}
  		
  		channel.close();
  		connection.close();
