@@ -8,6 +8,7 @@
 	<name>Rabbitmq</name>
 	<description>Rabbitmq</description>
 
+
 	<dependencies>
 		<dependency>
 			<groupId>com.rabbitmq</groupId>
