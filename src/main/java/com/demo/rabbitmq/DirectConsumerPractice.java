@@ -6,19 +6,19 @@ import java.util.concurrent.TimeoutException;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.DeliverCallback;
 
-public class DirectPublisherPractice {
-
+public class DirectConsumerPractice {
+	
 	public static void main(String[] args) throws IOException, TimeoutException {
 		ConnectionFactory factory = new ConnectionFactory();
 		Connection connection = factory.newConnection();
 		Channel channel = connection.createChannel();
 		
-		String msg = "This is a message to RADIO!";
-		
-		channel.basicPublish("Direct-Exchange-Practice", "radio", null, msg.getBytes());
-		connection.close();
-		channel.close();
+		DeliverCallback deliverCallback = (ConsumerTag, delivery) -> {
+			String msg = new String (delivery.getBody());
+			System.out.println("Message received = " + msg);
+		};
+		channel.basicConsume("Radio", true, deliverCallback, ConsumerTag -> {});
 	}
-
 }
